@@ -1,0 +1,61 @@
+﻿
+<div class="row booksTable">
+    <div class="row">
+        <div class="col-lg-3">
+            <input type="text" placeholder="Books filter..." class="input-lg form-control" ng-model="txtFilter" />
+        </div>
+        <div class="col-lg-3">
+            <div class="col-lg-2">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle mydropdown" type="button"  data-toggle="dropdown">
+                        Genres
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu customDropDown" role="menu" aria-labelledby="menu1">
+                        <li ng-repeat="genr in genres" data-book-type-id="{{genr.BookTypeId}}"  ng-click="FindByTypeId($event)" >
+                            {{genr.Genre}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br />
+    <br />
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="col-lg-2">Id</th>
+                <th class="col-lg-3">Name</th>
+                <th class="col-lg-1">Age</th>
+                <th class="col-lg-2">Type</th>
+                <th class="col-lg-2">Author</th>
+                <th class="col-lg-2">Publication</th>
+            </tr>
+        </thead>
+
+        <tr ng-repeat="item in books|filter " txtFilter">
+            <td>
+                {{item.Id}}
+            </td>
+            <td>
+                {{item.Name}}
+            </td>
+            <td>
+                {{item.Age}}
+            </td>
+            <td>
+                {{item.Book_Type}}
+            </td>
+            <td>
+                {{item.Author_Name}}
+            </td>
+            <td>
+                {{item.Publication}}
+            </td>
+        </tr>
+    </table>
+
+</div>
