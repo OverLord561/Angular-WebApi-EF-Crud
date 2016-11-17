@@ -71,12 +71,15 @@ namespace WebAPIHW.Controllers
         // PUT: api/ApiBooks/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBook(int id, [FromBody] Book book)
-        {            
+        {          
+              
             Book oldBook = db.Books.FirstOrDefault(x => x.BookId == id);
 
             oldBook.Age = book.Age;
             oldBook.Name = book.Name;
             oldBook.Publication = book.Publication;
+
+
 
             db.Entry(oldBook).State = EntityState.Modified;
             db.SaveChanges();

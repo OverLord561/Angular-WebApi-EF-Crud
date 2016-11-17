@@ -13,9 +13,9 @@ MyApp.config(['$routeProvider',
             templateUrl: '/Home/Edit',
             controller: 'EditController'
         }).
-        when('/Delete', {
-            templateUrl: '/Home/Delete',
-            controller: 'DeleteController'
+        when('/Details', {
+            templateUrl: '/Home/Details',
+            controller: 'DetailsController'
         }).
         when('/Books', {
             templateUrl: 'Home/Books',
@@ -29,17 +29,17 @@ MyApp.config(['$routeProvider',
 
 MyApp.controller("AddController", function ($scope, BooksApi) {
 
-    $scope.addBook = function () {
+    $scope.addBook = function ()
+    {
         var bookModel = {
             'Id': $scope.id,
             'Name': $scope.name,
             'Age': $scope.age,
             'Book_Type': $scope.book_type,
             'Author_Name': $scope.author_Name,
-            'Publication': $scope.publication,
+            'Publication': $scope.publication
         };
-
-
+        
         BooksApi.CreateBook(bookModel)
             .success(function (response) {
                 alert('book added');
@@ -49,22 +49,137 @@ MyApp.controller("AddController", function ($scope, BooksApi) {
                 $scope.book_type = undefined,
                 $scope.author_Name = undefined,
                 $scope.publication = undefined;
-            }).
-            error(function (response) {
-              
+            })
+            .error(function (response)
+            {
                 alert('Current book type does not exist!!!');
             });
     };
    
 
 });
-MyApp.controller("EditController", function ($scope) {
+MyApp.controller("EditController", function ($scope, BooksApi) {
 
-    $scope.message = "in Edit View";
+    $scope.selectedItem = "Select Book";
+    $scope.isDeleteItemVisible = false;
+    getBooks();
+
+    function getBooks()
+    {
+        BooksApi.BooksFullInfo().success(function (books) {
+           
+            $scope.books = books;           
+           
+        })
+       .error(function (error) {
+           $scope.status = 'Unable to load books data' + error.message;
+       })
+
+    };
+
+    $scope.dropboxitemselected = function (item)
+    {
+        $scope.isDeleteitemVisible = true;
+        $scope.selectedItem = item.Name;
+        $scope.name = item.Name;
+        $scope.age =  item.Age;        
+        $scope.publication = item.Publication;
+        $scope.id = item.Id;
+    };
+
+    $scope.UpdateBook = function(){
+        var bookToUpdate =
+            {
+                'Id': $scope.id,
+                'Name': $scope.name,
+                'Age': $scope.age,                
+                'Publication': $scope.publication
+            };
+    
+    BooksApi.EditBook(bookToUpdate)
+        .success(function (response) {
+      
+            alert('book updated');
+            
+       
+            $scope.name = undefined,
+            $scope.age = undefined,           
+            $scope.publication = undefined;
+            $scope.isDeleteitemVisible = false;
+            $scope.selectedItem = "Select Book";
+
+        }).
+            error(function (response)
+            {
+                alert('Current book does not exist!!!');
+            });
+    };
 });
-MyApp.controller("DeleteController", function ($scope) {
+MyApp.controller("DetailsController", function ($scope, BooksApi) {
+    $scope.selectedItem = "Select Book";
+    getBooks();
 
-    $scope.message = "in Delete View";
+    function getBooks() {
+        BooksApi.BooksFullInfo().success(function (books) {
+
+            $scope.books = books;
+
+        })
+       .error(function (error) {
+           $scope.status = 'Unable to load books data' + error.message;
+       })
+
+    };
+
+    $scope.DeleteBook = function ()
+    {
+        BooksApi.DeleteBook($scope.id) 
+        .success(function (response) {
+      
+            alert('book deleted');
+            $scope.id = undefined;
+            $scope.book_type =  undefined;
+            $scope.author_Name = undefined;
+            $scope.name = undefined;
+            $scope.age = undefined;           
+            $scope.publication = undefined;
+       
+        }).
+            error(function (response)
+            {
+                alert('Select book at first!!!');
+            });
+    };
+        
+    
+
+    $scope.dropboxitemselected = function (item) {
+        $scope.isDeleteitemVisible = true;
+        $scope.selectedItem = item.Name;
+        $scope.name = item.Name;
+        $scope.age = item.Age;
+        $scope.publication = item.Publication;
+        $scope.id = item.Id;
+        $scope.book_type =  item.Book_Type;
+        $scope.author_Name = item.Author_Name;
+    };
+
+    $scope.DetailsBook = function () {        
+
+        BooksApi.DetailsBook($scope.id)
+            .success(function (response) {
+
+                $scope.name = undefined,
+                $scope.age = undefined,
+                $scope.publication = undefined;
+                $scope.isDeleteitemVisible = false;
+                $scope.selectedItem = "Select Book";
+
+            }).
+                error(function (response) {
+                    alert('Current book does not exist!!!');
+                });
+    };
 });
 
 
@@ -80,7 +195,6 @@ MyApp.controller("HomeController", function ($scope, BooksApi) {
     };
     $scope.FindByTypeId = function ($event)
     {
-
         OnGenreChange($event.currentTarget.dataset['bookTypeId']);
     };
 

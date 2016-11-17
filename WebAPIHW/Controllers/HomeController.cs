@@ -24,10 +24,12 @@ namespace WebAPIHW.Controllers
         {
             return View();
         }
-        public ActionResult Delete()
+        public ActionResult Details()
         {
             return View();
         }
+
+        
 
         public ActionResult Books()
         {

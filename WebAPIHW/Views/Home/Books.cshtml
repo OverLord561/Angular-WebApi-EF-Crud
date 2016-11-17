@@ -1,9 +1,7 @@
 ﻿
 <div class="row booksTable">
     <div class="row">
-        <div class="col-lg-3">
-            <input type="text" placeholder="Books filter..." class="input-lg form-control" ng-model="txtFilter" />
-        </div>
+        
      
             <div class="col-lg-2">
                 <div class="dropdown">
@@ -44,7 +42,7 @@
             </tr>
         </thead>
 
-        <tr ng-repeat="item in books|filter " txtFilter">
+        <tr ng-repeat="item in books">
             <td>
                 {{item.Id}}
             </td>

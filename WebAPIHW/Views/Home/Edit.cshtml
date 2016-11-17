@@ -1,4 +1,43 @@
 ﻿
-<div class="row jumbotron">
-    <h2>{{message}}</h2>
+<h2 class="text-center text-danger"> Edit Book</h2>
+<br />
+<div class="row">
+
+    <div class="col-lg-3">
+        
+
+      
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle mydropdown" type="button" data-toggle="dropdown">
+               <span class="text-danger">{{selectedItem}}</span> 
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu customDropDown" role="menu" aria-labelledby="menu1">
+                <li ng-repeat="a in books">
+                    <a ng-click="dropboxitemselected(a)">{{a.Name}}</a>
+                </li>
+
+            </ul>
+        </div>
+        <br/>
+        <br />
+    </div>
+    <div class="col-lg-7">
+
+        <form>
+            <div class="form-group">
+                <input placeholder="Name..." type="text" ng-model="name" class="form-control" id="Name">
+            </div>
+            <div class="form-group">
+                <input placeholder="Age..." type="text" ng-model="age" class="form-control" id="Age">
+            </div>
+            <div class="form-group">
+                <input placeholder="Publication..." type="text" ng-model="publication" class="form-control" id="Publication">
+            </div>
+
+
+            <button ng-click="UpdateBook()" class="btn btn-default">Submit</button>
+        </form>
+
+    </div>
 </div>

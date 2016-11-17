@@ -1,0 +1,62 @@
+﻿
+<h2 class="text-center text-danger"> Details {{name}}</h2>
+<br />
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle mydropdown" type="button" data-toggle="dropdown">
+                <span class="text-danger">{{selectedItem}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu customDropDown" role="menu" aria-labelledby="menu1">
+                <li ng-repeat="a in books">
+                    <a ng-click="dropboxitemselected(a)">{{a.Name}}</a>
+                </li>
+
+            </ul>
+        </div>
+        <br />
+        <br />
+    </div>
+    <div class="col-lg-7">
+        <table class="table table-striped table-bordered mytable">
+            <thead>
+                <tr>
+                    <th class="col-lg-2">Id</th>
+                    <th class="col-lg-3">Name</th>
+                    <th class="col-lg-1">Age</th>
+                    <th class="col-lg-2">Type</th>
+                    <th class="col-lg-2">Author</th>
+                    <th class="col-lg-2">Publication</th>
+                </tr>
+            </thead>
+
+            <tr >
+                <td>
+                    {{id}}
+                </td>
+                <td>
+                    {{name}}
+                </td>
+                <td>
+                    {{age}}
+                </td>
+                <td>
+                    {{book_type}}
+                </td>
+                <td>
+                    {{author_Name}}
+                </td>
+                <td>
+                    {{publication}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-lg-2">
+        
+            <button ng-click="DeleteBook()" data-book-id="{{id}}" class="btn btn-default mydropdown">Delete book!</button>
+    
+    </div>
+</div>
