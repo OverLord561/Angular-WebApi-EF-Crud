@@ -72,6 +72,12 @@ MyApp.controller("HomeController", function ($scope, BooksApi) {
  
     BooksFullInfo();
     GetGenres();
+    $scope.hiddenCount = document.getElementsByClassName('alert-success')[0];
+    $scope.ShowAll = function ()
+    {
+        $scope.hiddenCount.style.visibility = "hidden";
+        $scope.books = $scope.initial;
+    };
     $scope.FindByTypeId = function ($event)
     {
 
@@ -81,7 +87,15 @@ MyApp.controller("HomeController", function ($scope, BooksApi) {
     function OnGenreChange(bookTypeId)
     {
         BooksApi.BooksFullInfoByTypeId(bookTypeId).success(function (booksByTypeId) {
+           
+            //get counts of books in type
+            var count = Object.keys(booksByTypeId).length;
+    
+            $scope.count = count;
+            $scope.Total = 'Total count: ';
             $scope.books = booksByTypeId;
+           
+            $scope.hiddenCount.style.visibility = "visible";
         })
        .error(function (error) {
            $scope.status = 'Unable to load booksByTypeId data' + error.message;
@@ -106,6 +120,7 @@ MyApp.controller("HomeController", function ($scope, BooksApi) {
 
         BooksApi.BooksFullInfo().success(function (books) {
             $scope.books = books;
+            $scope.initial = books;
         })
             .error(function (error) {
                 $scope.status = 'Unable to load books data' + error.message;
