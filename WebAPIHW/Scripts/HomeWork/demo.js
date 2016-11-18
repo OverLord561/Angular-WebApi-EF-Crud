@@ -133,16 +133,21 @@ MyApp.controller("DetailsController", function ($scope, BooksApi) {
 
     $scope.DeleteBook = function ()
     {
+
+        $scope.selectedItem = "Select Book";
         BooksApi.DeleteBook($scope.id) 
         .success(function (response) {
-      
-            alert('book deleted');
+           
+            getBooks();
+          
+            
             $scope.id = undefined;
             $scope.book_type =  undefined;
             $scope.author_Name = undefined;
             $scope.name = undefined;
             $scope.age = undefined;           
             $scope.publication = undefined;
+            alert('book deleted');
        
         }).
             error(function (response)
